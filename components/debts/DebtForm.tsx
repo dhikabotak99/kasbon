@@ -141,8 +141,8 @@ export function DebtForm({ initial, submitting, error, onSubmit }: DebtFormProps
         </p>
       )}
 
-      <div className="flex justify-end gap-2 pt-1">
-        <Button type="submit" loading={submitting}>
+      <div className="flex pt-1">
+        <Button type="submit" loading={submitting} className="flex-1 sm:flex-none">
           {initial ? "Simpan perubahan" : "Simpan"}
         </Button>
       </div>

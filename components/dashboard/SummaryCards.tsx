@@ -50,9 +50,8 @@ export function SummaryCards({ summary }: SummaryCardsProps) {
           <span className="text-xs font-medium">Net</span>
         </div>
         <p
-          className={`mt-2 text-lg font-semibold ${
-            netIsPositive ? "text-emerald-600" : "text-red-600"
-          }`}
+          className={`mt-2 text-lg font-semibold ${netIsPositive ? "text-emerald-600" : "text-red-600"
+            }`}
         >
           {formatRupiah(summary.net)}
         </p>

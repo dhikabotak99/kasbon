@@ -39,9 +39,9 @@ export function DebtItem({
             <p className="mt-1 line-clamp-2 text-sm text-gray-500">{debt.note}</p>
           )}
         </div>
-        <div className="text-right">
+        <div className="shrink-0 text-right">
           <p
-            className={`text-base font-semibold ${
+            className={`text-base font-semibold whitespace-nowrap ${
               isIOwe ? "text-red-600" : "text-emerald-700"
             }`}
           >
@@ -61,12 +61,12 @@ export function DebtItem({
             type="button"
             onClick={() => onMarkSettled(debt.id)}
             disabled={busy === "settled"}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-colors hover:bg-emerald-100 disabled:opacity-50 cursor-pointer"
+            className="inline-flex min-h-9 flex-1 basis-auto items-center justify-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-100 disabled:opacity-50 cursor-pointer sm:flex-none sm:py-1.5"
           >
             {busy === "settled" ? (
-              <Loader2 className="size-3.5 animate-spin" />
+              <Loader2 className="size-4 animate-spin" />
             ) : (
-              <Check className="size-3.5" />
+              <Check className="size-4" />
             )}
             Tandai lunas
           </button>
@@ -74,21 +74,21 @@ export function DebtItem({
         <button
           type="button"
           onClick={() => onEdit(debt)}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-gray-50 px-3 py-1.5 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100 cursor-pointer"
+          className="inline-flex min-h-9 flex-1 basis-auto items-center justify-center gap-1.5 rounded-lg bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 cursor-pointer sm:flex-none sm:py-1.5"
         >
-          <Pencil className="size-3.5" />
+          <Pencil className="size-4" />
           Edit
         </button>
         <button
           type="button"
           onClick={() => onDelete(debt)}
           disabled={busy === "delete"}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-red-50 px-3 py-1.5 text-xs font-medium text-red-600 transition-colors hover:bg-red-100 disabled:opacity-50 cursor-pointer"
+          className="inline-flex min-h-9 flex-1 basis-auto items-center justify-center gap-1.5 rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-100 disabled:opacity-50 cursor-pointer sm:flex-none sm:py-1.5"
         >
           {busy === "delete" ? (
-            <Loader2 className="size-3.5 animate-spin" />
+            <Loader2 className="size-4 animate-spin" />
           ) : (
-            <Trash2 className="size-3.5" />
+            <Trash2 className="size-4" />
           )}
           Hapus
         </button>

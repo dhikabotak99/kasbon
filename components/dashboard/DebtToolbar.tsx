@@ -37,7 +37,7 @@ export function DebtToolbar({
         <select
           value={sortKey}
           onChange={(e) => onSortKeyChange(e.target.value as SortKey)}
-          className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-2 focus:outline-offset-1 focus:outline-indigo-600"
+          className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-2 focus:outline-offset-1 focus:outline-indigo-600"
         >
           <option value="created_at">Tanggal</option>
           <option value="amount">Jumlah</option>
@@ -47,11 +47,13 @@ export function DebtToolbar({
           onClick={() =>
             onSortOrderChange(sortOrder === "asc" ? "desc" : "asc")
           }
-          className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 cursor-pointer"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 cursor-pointer"
           title={sortOrder === "asc" ? "Urutan naik" : "Urutan turun"}
         >
           <ArrowDownWideNarrow className="size-4" />
-          {sortOrder === "asc" ? "Naik" : "Turun"}
+          <span className="hidden sm:inline">
+            {sortOrder === "asc" ? "Naik" : "Turun"}
+          </span>
         </button>
       </div>
     </div>

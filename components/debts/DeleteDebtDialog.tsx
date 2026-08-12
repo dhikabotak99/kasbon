@@ -45,7 +45,7 @@ export function DeleteDebtDialog({
             </p>
           )}
 
-          <div className="mt-6 flex justify-end gap-2">
+          <div className="mt-6 grid grid-cols-2 gap-2">
             <Button variant="secondary" onClick={onClose} disabled={deleting}>
               Batal
             </Button>

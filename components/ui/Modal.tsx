@@ -31,13 +31,13 @@ export function Modal({ open, title, onClose, children }: ModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-4"
-      onClick={onClose}
-    >
+        className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 sm:items-center sm:p-4"
+        onClick={onClose}
+      >
       <div
         role="dialog"
         aria-modal="true"
-        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl bg-white p-6 shadow-xl sm:max-w-md sm:rounded-2xl"
+        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl bg-white px-4 py-5 shadow-xl sm:max-w-md sm:rounded-2xl sm:px-6 sm:py-6"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">

@@ -7,7 +7,7 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-10 border-b border-gray-200 bg-white/80 backdrop-blur">
-        <div className="mx-auto flex h-14 w-full max-w-2xl items-center justify-between px-4">
+        <div className="mx-auto flex h-14 w-full max-w-3xl items-center justify-between px-4 sm:px-6 lg:max-w-5xl lg:px-8 xl:max-w-6xl 2xl:max-w-7xl">
           <div className="flex items-center gap-2 text-gray-900">
             <span className="flex size-7 items-center justify-center rounded-lg bg-indigo-600 text-white">
               <Wallet className="size-4" />
@@ -17,7 +17,7 @@ export default function DashboardLayout({
           <LogoutButton />
         </div>
       </header>
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6">{children}</main>
+      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-6 sm:px-6 lg:max-w-5xl lg:px-8 xl:max-w-6xl 2xl:max-w-7xl">{children}</main>
     </div>
   );
 }

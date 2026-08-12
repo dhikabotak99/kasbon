@@ -57,7 +57,7 @@ export function SignupForm() {
   }
 
   return (
-    <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-sm ring-1 ring-gray-200">
+    <div className="w-full max-w-sm rounded-2xl bg-white p-5 shadow-sm ring-1 ring-gray-200 sm:p-8">
       <h1 className="text-2xl font-semibold text-gray-900">Daftar akun</h1>
       <p className="mt-1 text-sm text-gray-500">
         Gratis. Mulai catat utang-piutang kamu sekarang.

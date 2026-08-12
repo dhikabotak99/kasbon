@@ -235,7 +235,7 @@ export function DashboardView() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-semibold text-gray-900">
             Catatan Kasbon
@@ -244,7 +244,11 @@ export function DashboardView() {
             Kelola utang-piutang kamu di satu tempat.
           </p>
         </div>
-        <Button onClick={openCreate} size="sm">
+        <Button
+          onClick={openCreate}
+          size="sm"
+          className="w-full sm:w-auto"
+        >
           <Plus className="size-4" />
           Catat baru
         </Button>
@@ -254,21 +258,22 @@ export function DashboardView() {
 
       {summary && <DebtChart summary={summary} />}
 
-      <DebtFilters
-        status={status}
-        type={type}
-        onStatusChange={setStatus}
-        onTypeChange={setType}
-      />
-
-      <DebtToolbar
-        search={search}
-        onSearchChange={setSearch}
-        sortKey={sortKey}
-        sortOrder={sortOrder}
-        onSortKeyChange={setSortKey}
-        onSortOrderChange={setSortOrder}
-      />
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_2.5fr] lg:items-end lg:gap-4">
+        <DebtFilters
+          status={status}
+          type={type}
+          onStatusChange={setStatus}
+          onTypeChange={setType}
+        />
+        <DebtToolbar
+          search={search}
+          onSearchChange={setSearch}
+          sortKey={sortKey}
+          sortOrder={sortOrder}
+          onSortKeyChange={setSortKey}
+          onSortOrderChange={setSortOrder}
+        />
+      </div>
 
       {error && !loading && (
         <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
@@ -277,9 +282,9 @@ export function DashboardView() {
       )}
 
       {loading ? (
-        <div className="space-y-3">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="h-24 animate-pulse rounded-xl bg-gray-100" />
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="h-28 animate-pulse rounded-xl bg-gray-100" />
           ))}
         </div>
       ) : visibleDebts.length === 0 ? (
@@ -291,7 +296,7 @@ export function DashboardView() {
           </p>
         )
       ) : (
-        <ul className="space-y-3">
+        <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {visibleDebts.map((debt) => (
             <DebtItem
               key={debt.id}
