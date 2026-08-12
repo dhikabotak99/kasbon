@@ -32,3 +32,5 @@ export const DEBT_TYPE_LABELS: Record<DebtType, string> = {
 
 export type StatusFilter = "all" | "unsettled" | "settled";
 export type TypeFilter = "all" | DebtType;
+export type SortKey = "created_at" | "amount";
+export type SortOrder = "asc" | "desc";

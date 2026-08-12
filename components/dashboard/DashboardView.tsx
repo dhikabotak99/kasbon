@@ -1,17 +1,21 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type {
   Debt,
   DebtSummary,
   GetDebtsResponse,
+  SortKey,
+  SortOrder,
   StatusFilter,
   TypeFilter,
 } from "@/lib/types";
 import { Button } from "@/components/ui/Button";
 import { SummaryCards } from "@/components/dashboard/SummaryCards";
 import { DebtFilters } from "@/components/dashboard/DebtFilters";
+import { DebtToolbar } from "@/components/dashboard/DebtToolbar";
+import { DebtChart } from "@/components/dashboard/DebtChart";
 import { DebtItem } from "@/components/dashboard/DebtItem";
 import { EmptyState } from "@/components/dashboard/EmptyState";
 import { DebtModal } from "@/components/debts/DebtModal";
@@ -22,6 +26,9 @@ export function DashboardView() {
   const [summary, setSummary] = useState<DebtSummary | null>(null);
   const [status, setStatus] = useState<StatusFilter>("all");
   const [type, setType] = useState<TypeFilter>("all");
+  const [search, setSearch] = useState("");
+  const [sortKey, setSortKey] = useState<SortKey>("created_at");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -95,6 +102,29 @@ export function DashboardView() {
       cancelled = true;
     };
   }, [loadDebts, status, type]);
+
+  const visibleDebts = useMemo(() => {
+    const term = search.trim().toLowerCase();
+
+    let filtered = debts;
+    if (term) {
+      filtered = filtered.filter((debt) =>
+        debt.counterpart_name.toLowerCase().includes(term)
+      );
+    }
+
+    const sorted = [...filtered];
+    sorted.sort((a, b) => {
+      if (sortKey === "amount") {
+        return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
+      }
+      const diff =
+        new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+      return sortOrder === "asc" ? diff : -diff;
+    });
+
+    return sorted;
+  }, [debts, search, sortKey, sortOrder]);
 
   async function openCreate() {
     setModalMode("create");
@@ -222,11 +252,22 @@ export function DashboardView() {
 
       <SummaryCards summary={summary} />
 
+      {summary && <DebtChart summary={summary} />}
+
       <DebtFilters
         status={status}
         type={type}
         onStatusChange={setStatus}
         onTypeChange={setType}
+      />
+
+      <DebtToolbar
+        search={search}
+        onSearchChange={setSearch}
+        sortKey={sortKey}
+        sortOrder={sortOrder}
+        onSortKeyChange={setSortKey}
+        onSortOrderChange={setSortOrder}
       />
 
       {error && !loading && (
@@ -241,11 +282,17 @@ export function DashboardView() {
             <div key={i} className="h-24 animate-pulse rounded-xl bg-gray-100" />
           ))}
         </div>
-      ) : debts.length === 0 ? (
-        <EmptyState />
+      ) : visibleDebts.length === 0 ? (
+        debts.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <p className="rounded-lg bg-gray-100 px-3 py-2 text-center text-sm text-gray-500">
+            Nggak ada catatan yang cocok sama pencarian.
+          </p>
+        )
       ) : (
         <ul className="space-y-3">
-          {debts.map((debt) => (
+          {visibleDebts.map((debt) => (
             <DebtItem
               key={debt.id}
               debt={debt}
