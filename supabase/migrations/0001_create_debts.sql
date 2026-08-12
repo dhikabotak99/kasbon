@@ -38,6 +38,19 @@ create trigger set_debts_updated_at
   execute function public.set_updated_at();
 
 -- ============================================================
+-- GRANT: RLS membatasi baris, tapi role butuh izin tabel dulu.
+-- anon tidak diberi akses tabel sama sekali (tanpa sesi = ditolak).
+-- ============================================================
+grant usage on schema public to authenticated;
+grant select, insert, update, delete on public.debts to authenticated;
+
+/*
+ * Catatan: kalau project ini dibuat lewat dashboard (bukan raw SQL),
+ * schema public dan tabel biasanya sudah di-grant otomatis. Grant di
+ * atas idempotent, jadi aman dijalankan ulang.
+ */
+
+-- ============================================================
 -- RLS: user hanya bisa mengakses debt miliknya sendiri.
 -- ============================================================
 alter table public.debts enable row level security;
@@ -83,3 +96,6 @@ as $$
   from public.debts
   where user_id = auth.uid();
 $$;
+
+-- RPC hanya boleh dipanggil oleh role authenticated (backend server client kita).
+grant execute on function public.get_debt_summary() to authenticated;
