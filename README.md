@@ -59,7 +59,7 @@ Tidak ada library tambahan untuk formatting Rupiah atau relative date — keduan
 ### 1. Clone repository
 
 ```bash
-git clone <url-repository-kamu>
+git clone https://github.com/dhikabotak99/kasbon
 cd Kasbon
 ```
 
@@ -124,9 +124,7 @@ npm run build
 
 ## Demo
 
-LIVE_URL_PLACEHOLDER
-
-(Deployment Vercel — isi dengan URL setelah `vercel deploy`.)
+https://kasbon-psi.vercel.app/
 
 ## Approach
 
@@ -141,45 +139,17 @@ Selain itu, setiap field di-validasi **dua kali** (Zod-like validasi manual di s
 > Kalau ada 1 hari lagi, apa yang akan kamu polish?
 
 1. **Grouping per orang** — menampilkan "Budi (3 catatan, total Rp 2.500.000)" seperti requirement bonus `Grouping`.
-2. **Pagination** — saat data sudah banyak, daftar debt sebaiknya di-paginate atau infinite scroll.
+2. **Pagination** — saat data sudah banyak, daftar debt akan diberi pagination atau infinite scroll agar saat mengambi data tidak berat, karena API akan mengambil sedikit-sedikit.
 3. **Tampilkan debt yang sudah lunas lebih redup/dicoret** agar status lebih terasa visual.
-4. **Testing otomatis** — integrasi test untuk RLS (user A tidak bisa akses data user B) dan unit test untuk util formatting.
 
 ## Time Spent
 
-Estimasi pengerjaan end-to-end (setup → API → UI → bonus → dokumentasi): **± 12–14 jam** tersebar dalam beberapa sesi kerja.
+Estimasi pengerjaan end-to-end (setup → API → UI → bonus → dokumentasi): **± 6–10 jam** tersebar dalam beberapa sesi kerja.
 
-- Foundation + Supabase setup: ±2 jam
-- Auth: ±2 jam
-- Schema + RLS + migration: ±2 jam
-- CRUD API: ±3 jam
-- Dashboard UI + formatting + states: ±3 jam
-- Bonus (search, sort, chart): ±1,5 jam
+- Foundation + Supabase setup: ±1 jam
+- Auth: ±1 jam
+- Schema + RLS + migration: ±1 jam
+- CRUD API: ±1 jam
+- Dashboard UI + formatting + states: ±2 jam
+- Bonus (search, sort, chart): ±1 jam
 - Dokumentasi & polish: ±1 jam
-
-## Struktur Proyek
-
-```text
-app/
-├── (auth)/
-│   ├── login/page.tsx
-│   └── signup/page.tsx
-├── (dashboard)/page.tsx
-└── api/debts/
-    ├── route.ts          # GET (list + filter + summary), POST
-    └── [id]/route.ts     # PATCH (edit + settled), DELETE
-
-components/
-├── auth/                 # LoginForm, SignupForm, LogoutButton
-├── dashboard/            # SummaryCards, DebtList items, Filters, Chart, EmptyState
-├── debts/                # DebtForm, DebtModal, DeleteDebtDialog, DebtStatusBadge
-└── ui/                   # Button, Input, Modal
-
-lib/
-├── supabase/             # client.ts (browser), server.ts (server) , middleware.ts
-├── validations/          # debt.ts (validasi create & update)
-├── utils/                # api.ts (helper error), format.ts (Rupiah & relative date)
-└── types.ts              # Debt, DebtSummary, filter/sort types
-
-supabase/migrations/      # 0001_create_debts.sql (schema + RLS)
-```
